@@ -1,0 +1,9 @@
+type GLenum := Unsigned[32]
+type GLboolean := bool
+
+/**
+ * OpenGL is a C library; we will export all symbols with a gl or a GL_ prefix
+ * in this type.
+ */
+type gl {
+}

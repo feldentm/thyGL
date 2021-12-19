@@ -1,0 +1,23 @@
+with string := tyr.io.CString
+
+/**
+ * GLEW is a C library; we will export all symbols with a glew or a GLEW_ prefix
+ * in this type.
+ */
+public type glew {
+
+  // macro defs
+  public type val OK = 0u32
+  public type val VERSION = 1u32
+  public type val VERSION_MAJOR = 2u32
+  public type val VERSION_MINOR = 3u32
+  public type val VERSION_MICRO = 4u32
+
+
+  // functions
+  public type def init : GLenum extern glew.glewInit
+  public type def isSupported(name : string) : GLboolean extern glew.glewIsSupported
+  public type def getExtension(name : string) : GLboolean extern glew.glewGetExtension
+  public type def getErrorString(error : GLenum) : string extern glew.glewGetErrorString
+  public type def getString(name : GLenum) : string extern glew.glewGetString
+}
