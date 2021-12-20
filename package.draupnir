@@ -4,5 +4,5 @@ name=feldentm.thyGL
 with=tyr.io
 
 # we use OpenGL and glew
-extern opengl from libGL
+extern gl from libGL
 extern glew from libGLEW

@@ -1,9 +1,309 @@
-type GLenum := Unsigned[32]
-type GLboolean := bool
+with string := tyr.io.CString
+
+// OpenGL typedefs
+public type GLboolean := bool
+
+public type GLbitfield := Unsigned[32]
+public type GLenum := Unsigned[32]
+public type GLuint := Unsigned[32]
+
+
 
 /**
  * OpenGL is a C library; we will export all symbols with a gl or a GL_ prefix
  * in this type.
+ *
+ * @note for now, all magic values map to unsigned integers
  */
-type gl {
+public type gl {
+
+  /* glPush/PopAttrib bits */
+  public type val CURRENT_BIT = 0x00000001u
+  public type val POINT_BIT = 0x00000002u
+  public type val LINE_BIT = 0x00000004u
+  public type val POLYGON_BIT = 0x00000008u
+  public type val POLYGON_STIPPLE_BIT =	0x00000010u
+  public type val PIXEL_MODE_BIT =	0x00000020u
+  public type val LIGHTING_BIT = 0x00000040u
+  public type val FOG_BIT = 0x00000080u
+  public type val DEPTH_BUFFER_BIT =	0x00000100u
+  public type val ACCUM_BUFFER_BIT =	0x00000200u
+  public type val STENCIL_BUFFER_BIT =	0x00000400u
+  public type val VIEWPORT_BIT = 0x00000800u
+  public type val TRANSFORM_BIT =	0x00001000u
+  public type val ENABLE_BIT = 0x00002000u
+  public type val COLOR_BUFFER_BIT =	0x00004000u
+  public type val HINT_BIT = 0x00008000u
+  public type val EVAL_BIT = 0x00010000u
+  public type val LIST_BIT = 0x00020000u
+  public type val TEXTURE_BIT = 0x00040000u
+  public type val SCISSOR_BIT = 0x00080000u
+  public type val ALL_ATTRIB_BITS =	0xFFFFFFFFu
+
+  /* Primitives */
+  public type val POINTS = 0x0000u
+  public type val LINES = 0x0001u
+  public type val LINE_LOOP = 0x0002u
+  public type val LINE_STRIP = 0x0003u
+  public type val TRIANGLES = 0x0004u
+  public type val TRIANGLE_STRIP =	0x0005u
+  public type val TRIANGLE_FAN = 0x0006u
+  public type val QUADS = 0x0007u
+  public type val QUAD_STRIP = 0x0008u
+  public type val POLYGON = 0x0009u
+
+
+
+  // draw API
+  public type def begin(mode : GLenum) : void extern gl.glBegin
+  public type def end : void extern gl.glEnd
+
+
+  public type def vertex(x : double, y : double) : void extern gl.glVertex2d
+  public type def vertex(x : float, y : float) : void extern gl.glVertex2f
+  public type def vertex(x : int, y : int) : void extern gl.glVertex2i
+  public type def vertex(x : short, y : short) : void extern gl.glVertex2s
+
+  public type def vertex(x : double, y : double, z : double) : void extern gl.glVertex3d
+  public type def vertex(x : float, y : float, z : float) : void extern gl.glVertex3f
+  public type def vertex(x : int, y : int, z : int) : void extern gl.glVertex3i
+  public type def vertex(x : short, y : short, z : short) : void extern gl.glVertex3s
+
+/*
+GLAPI void GLAPIENTRY glVertex4d( GLdouble x, GLdouble y, GLdouble z, GLdouble w );
+GLAPI void GLAPIENTRY glVertex4f( GLfloat x, GLfloat y, GLfloat z, GLfloat w );
+GLAPI void GLAPIENTRY glVertex4i( GLint x, GLint y, GLint z, GLint w );
+GLAPI void GLAPIENTRY glVertex4s( GLshort x, GLshort y, GLshort z, GLshort w );
+
+GLAPI void GLAPIENTRY glVertex2dv( const GLdouble *v );
+GLAPI void GLAPIENTRY glVertex2fv( const GLfloat *v );
+GLAPI void GLAPIENTRY glVertex2iv( const GLint *v );
+GLAPI void GLAPIENTRY glVertex2sv( const GLshort *v );
+
+GLAPI void GLAPIENTRY glVertex3dv( const GLdouble *v );
+GLAPI void GLAPIENTRY glVertex3fv( const GLfloat *v );
+GLAPI void GLAPIENTRY glVertex3iv( const GLint *v );
+GLAPI void GLAPIENTRY glVertex3sv( const GLshort *v );
+
+GLAPI void GLAPIENTRY glVertex4dv( const GLdouble *v );
+GLAPI void GLAPIENTRY glVertex4fv( const GLfloat *v );
+GLAPI void GLAPIENTRY glVertex4iv( const GLint *v );
+GLAPI void GLAPIENTRY glVertex4sv( const GLshort *v );
+*/
+
+  public type def normal(x : byte, y : byte, z : byte) : void extern gl.glNormal3b
+  public type def normal(x : short, y : short, z : short) : void extern gl.glNormal3s
+  public type def normal(x : int, y : int, z : int) : void extern gl.glNormal3i
+  public type def normal(x : float, y : float, z : float) : void extern gl.glNormal3f
+  public type def normal(x : double, y : double, z : double) : void extern gl.glNormal3d
+
+/*
+GLAPI void GLAPIENTRY glNormal3bv( const GLbyte *v );
+GLAPI void GLAPIENTRY glNormal3dv( const GLdouble *v );
+GLAPI void GLAPIENTRY glNormal3fv( const GLfloat *v );
+GLAPI void GLAPIENTRY glNormal3iv( const GLint *v );
+GLAPI void GLAPIENTRY glNormal3sv( const GLshort *v );
+
+
+GLAPI void GLAPIENTRY glIndexd( GLdouble c );
+GLAPI void GLAPIENTRY glIndexf( GLfloat c );
+GLAPI void GLAPIENTRY glIndexi( GLint c );
+GLAPI void GLAPIENTRY glIndexs( GLshort c );
+GLAPI void GLAPIENTRY glIndexub( GLubyte c );
+
+GLAPI void GLAPIENTRY glIndexdv( const GLdouble *c );
+GLAPI void GLAPIENTRY glIndexfv( const GLfloat *c );
+GLAPI void GLAPIENTRY glIndexiv( const GLint *c );
+GLAPI void GLAPIENTRY glIndexsv( const GLshort *c );
+GLAPI void GLAPIENTRY glIndexubv( const GLubyte *c );
+*/
+
+
+  public type def color(r : double, g : double, b : double) : void
+    extern gl.glColor3d
+  public type def color(r : float, g : float, b : float) : void
+    extern gl.glColor3f
+/*
+GLAPI void GLAPIENTRY glColor3b( GLbyte red, GLbyte green, GLbyte blue );
+GLAPI void GLAPIENTRY glColor3i( GLint red, GLint green, GLint blue );
+GLAPI void GLAPIENTRY glColor3s( GLshort red, GLshort green, GLshort blue );
+GLAPI void GLAPIENTRY glColor3ub( GLubyte red, GLubyte green, GLubyte blue );
+GLAPI void GLAPIENTRY glColor3ui( GLuint red, GLuint green, GLuint blue );
+GLAPI void GLAPIENTRY glColor3us( GLushort red, GLushort green, GLushort blue );
+*/
+  public type def color(r : double, g : double, b : double, a : double) : void
+    extern gl.glColor4d
+  public type def color(r : float, g : float, b : float, a : float) : void
+    extern gl.glColor4f
+
+/*
+GLAPI void GLAPIENTRY glColor4b( GLbyte red, GLbyte green,
+                                   GLbyte blue, GLbyte alpha );
+GLAPI void GLAPIENTRY glColor4i( GLint red, GLint green,
+                                   GLint blue, GLint alpha );
+GLAPI void GLAPIENTRY glColor4s( GLshort red, GLshort green,
+                                   GLshort blue, GLshort alpha );
+GLAPI void GLAPIENTRY glColor4ub( GLubyte red, GLubyte green,
+                                    GLubyte blue, GLubyte alpha );
+GLAPI void GLAPIENTRY glColor4ui( GLuint red, GLuint green,
+                                    GLuint blue, GLuint alpha );
+GLAPI void GLAPIENTRY glColor4us( GLushort red, GLushort green,
+                                    GLushort blue, GLushort alpha );
+*/
+
+/* proceed if required
+GLAPI void GLAPIENTRY glColor3bv( const GLbyte *v );
+GLAPI void GLAPIENTRY glColor3dv( const GLdouble *v );
+GLAPI void GLAPIENTRY glColor3fv( const GLfloat *v );
+GLAPI void GLAPIENTRY glColor3iv( const GLint *v );
+GLAPI void GLAPIENTRY glColor3sv( const GLshort *v );
+GLAPI void GLAPIENTRY glColor3ubv( const GLubyte *v );
+GLAPI void GLAPIENTRY glColor3uiv( const GLuint *v );
+GLAPI void GLAPIENTRY glColor3usv( const GLushort *v );
+
+GLAPI void GLAPIENTRY glColor4bv( const GLbyte *v );
+GLAPI void GLAPIENTRY glColor4dv( const GLdouble *v );
+GLAPI void GLAPIENTRY glColor4fv( const GLfloat *v );
+GLAPI void GLAPIENTRY glColor4iv( const GLint *v );
+GLAPI void GLAPIENTRY glColor4sv( const GLshort *v );
+GLAPI void GLAPIENTRY glColor4ubv( const GLubyte *v );
+GLAPI void GLAPIENTRY glColor4uiv( const GLuint *v );
+GLAPI void GLAPIENTRY glColor4usv( const GLushort *v );
+
+
+GLAPI void GLAPIENTRY glTexCoord1d( GLdouble s );
+GLAPI void GLAPIENTRY glTexCoord1f( GLfloat s );
+GLAPI void GLAPIENTRY glTexCoord1i( GLint s );
+GLAPI void GLAPIENTRY glTexCoord1s( GLshort s );
+
+GLAPI void GLAPIENTRY glTexCoord2d( GLdouble s, GLdouble t );
+GLAPI void GLAPIENTRY glTexCoord2f( GLfloat s, GLfloat t );
+GLAPI void GLAPIENTRY glTexCoord2i( GLint s, GLint t );
+GLAPI void GLAPIENTRY glTexCoord2s( GLshort s, GLshort t );
+
+GLAPI void GLAPIENTRY glTexCoord3d( GLdouble s, GLdouble t, GLdouble r );
+GLAPI void GLAPIENTRY glTexCoord3f( GLfloat s, GLfloat t, GLfloat r );
+GLAPI void GLAPIENTRY glTexCoord3i( GLint s, GLint t, GLint r );
+GLAPI void GLAPIENTRY glTexCoord3s( GLshort s, GLshort t, GLshort r );
+
+GLAPI void GLAPIENTRY glTexCoord4d( GLdouble s, GLdouble t, GLdouble r, GLdouble q );
+GLAPI void GLAPIENTRY glTexCoord4f( GLfloat s, GLfloat t, GLfloat r, GLfloat q );
+GLAPI void GLAPIENTRY glTexCoord4i( GLint s, GLint t, GLint r, GLint q );
+GLAPI void GLAPIENTRY glTexCoord4s( GLshort s, GLshort t, GLshort r, GLshort q );
+
+GLAPI void GLAPIENTRY glTexCoord1dv( const GLdouble *v );
+GLAPI void GLAPIENTRY glTexCoord1fv( const GLfloat *v );
+GLAPI void GLAPIENTRY glTexCoord1iv( const GLint *v );
+GLAPI void GLAPIENTRY glTexCoord1sv( const GLshort *v );
+
+GLAPI void GLAPIENTRY glTexCoord2dv( const GLdouble *v );
+GLAPI void GLAPIENTRY glTexCoord2fv( const GLfloat *v );
+GLAPI void GLAPIENTRY glTexCoord2iv( const GLint *v );
+GLAPI void GLAPIENTRY glTexCoord2sv( const GLshort *v );
+
+GLAPI void GLAPIENTRY glTexCoord3dv( const GLdouble *v );
+GLAPI void GLAPIENTRY glTexCoord3fv( const GLfloat *v );
+GLAPI void GLAPIENTRY glTexCoord3iv( const GLint *v );
+GLAPI void GLAPIENTRY glTexCoord3sv( const GLshort *v );
+
+GLAPI void GLAPIENTRY glTexCoord4dv( const GLdouble *v );
+GLAPI void GLAPIENTRY glTexCoord4fv( const GLfloat *v );
+GLAPI void GLAPIENTRY glTexCoord4iv( const GLint *v );
+GLAPI void GLAPIENTRY glTexCoord4sv( const GLshort *v );
+*/
+
+  // misc API
+  public type def clearIndex(c : float) : void extern gl.glClearIndex
+
+  public type def clearColor(r : float, g : float, b : float, a : float) : void
+    extern gl.glClearColor
+
+  public type def clear(mask : GLbitfield) : void extern gl.glClear
+
+  public type def indexMask(mask : GLuint) : void extern gl.glIndexMask
+
+  public type def colorMask(r : bool, g : bool, b : bool, a : bool) : void
+    extern gl.glColorMask
+/* proceed if required
+GLAPI void GLAPIENTRY glAlphaFunc( GLenum func, GLclampf ref );
+
+GLAPI void GLAPIENTRY glBlendFunc( GLenum sfactor, GLenum dfactor );
+
+GLAPI void GLAPIENTRY glLogicOp( GLenum opcode );
+
+GLAPI void GLAPIENTRY glCullFace( GLenum mode );
+
+GLAPI void GLAPIENTRY glFrontFace( GLenum mode );
+
+GLAPI void GLAPIENTRY glPointSize( GLfloat size );
+
+GLAPI void GLAPIENTRY glLineWidth( GLfloat width );
+
+GLAPI void GLAPIENTRY glLineStipple( GLint factor, GLushort pattern );
+
+GLAPI void GLAPIENTRY glPolygonMode( GLenum face, GLenum mode );
+
+GLAPI void GLAPIENTRY glPolygonOffset( GLfloat factor, GLfloat units );
+
+GLAPI void GLAPIENTRY glPolygonStipple( const GLubyte *mask );
+
+GLAPI void GLAPIENTRY glGetPolygonStipple( GLubyte *mask );
+
+GLAPI void GLAPIENTRY glEdgeFlag( GLboolean flag );
+
+GLAPI void GLAPIENTRY glEdgeFlagv( const GLboolean *flag );
+
+GLAPI void GLAPIENTRY glScissor( GLint x, GLint y, GLsizei width, GLsizei height);
+
+GLAPI void GLAPIENTRY glClipPlane( GLenum plane, const GLdouble *equation );
+
+GLAPI void GLAPIENTRY glGetClipPlane( GLenum plane, GLdouble *equation );
+
+GLAPI void GLAPIENTRY glDrawBuffer( GLenum mode );
+
+GLAPI void GLAPIENTRY glReadBuffer( GLenum mode );
+*/
+  public type def enable(cap : GLenum) : void extern gl.glEnable
+
+  public type def disable(cap : GLenum) : void extern gl.glDisable
+
+  public type def isEnabled(cap : GLenum) : bool extern gl.glIsEnabled
+
+/* proceed if required
+GLAPI void GLAPIENTRY glEnableClientState( GLenum cap );
+
+GLAPI void GLAPIENTRY glDisableClientState( GLenum cap );
+
+
+GLAPI void GLAPIENTRY glGetBooleanv( GLenum pname, GLboolean *params );
+
+GLAPI void GLAPIENTRY glGetDoublev( GLenum pname, GLdouble *params );
+
+GLAPI void GLAPIENTRY glGetFloatv( GLenum pname, GLfloat *params );
+
+GLAPI void GLAPIENTRY glGetIntegerv( GLenum pname, GLint *params );
+
+
+GLAPI void GLAPIENTRY glPushAttrib( GLbitfield mask );
+
+GLAPI void GLAPIENTRY glPopAttrib( void );
+
+
+GLAPI void GLAPIENTRY glPushClientAttrib( GLbitfield mask );
+
+GLAPI void GLAPIENTRY glPopClientAttrib( void );
+
+
+GLAPI GLint GLAPIENTRY glRenderMode( GLenum mode );
+*/
+  public type def getError : GLenum extern gl.glGetError
+
+  public type def getString(name : GLenum) : string extern gl.glGetString
+
+  public type def finish : void extern gl.glFinish
+
+  public type def flush : void extern gl.glFlush
+
+  public type def hint(target : GLenum, mode : GLenum) : void extern gl.glHint
+
 }
