@@ -119,13 +119,15 @@ GLAPI void GLAPIENTRY glIndexubv( const GLubyte *c );
 */
 
 
+  public type def color(r : byte, g : byte, b : byte) : void
+    extern gl.glColor3b
+  public type def color(r : int, g : int, b : int) : void
+    extern gl.glColor3i
   public type def color(r : double, g : double, b : double) : void
     extern gl.glColor3d
   public type def color(r : float, g : float, b : float) : void
     extern gl.glColor3f
 /*
-GLAPI void GLAPIENTRY glColor3b( GLbyte red, GLbyte green, GLbyte blue );
-GLAPI void GLAPIENTRY glColor3i( GLint red, GLint green, GLint blue );
 GLAPI void GLAPIENTRY glColor3s( GLshort red, GLshort green, GLshort blue );
 GLAPI void GLAPIENTRY glColor3ub( GLubyte red, GLubyte green, GLubyte blue );
 GLAPI void GLAPIENTRY glColor3ui( GLuint red, GLuint green, GLuint blue );
