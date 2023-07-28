@@ -1,0 +1,41 @@
+with container.ArrayView
+with container.index_t
+
+/**
+ * Wrap texture IDs with common texture-related functions.
+ */
+public type texture {
+  private val ID : GLuint
+
+  public new (
+    data : ArrayView[byte], width : index_t, height : index_t,
+    textureFormat : GLenum = gl.RGB,
+    dataFormat : GLenum = gl.RGB
+  ) {
+    var textureID : GLuint
+    gl.genTextures(1, textureID)
+    ID = textureID
+
+    gl.bindTexture(gl.TEXTURE_2D, ID)
+
+    gl.texParameter(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT)
+    gl.texParameter(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT)
+    gl.texParameter(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR)
+    gl.texParameter(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+
+    gl.texImage2D(gl.TEXTURE_2D, 0, textureFormat,
+      GLsizei !! width.unpack, GLsizei !! height.unpack,
+      0, dataFormat, gl.UNSIGNED_BYTE, data
+    )
+    gl.generateMipmap(gl.TEXTURE_2D)
+  }
+
+  delete {
+    gl.deleteTextures(1, ID);
+  }
+
+  public def bind(channel : index_t = 0) : void {
+    gl.activeTexture(gl.TEXTURE0 + channel.unpack.resize[32]());
+    gl.bindTexture(gl.TEXTURE_2D, ID)
+  }
+}

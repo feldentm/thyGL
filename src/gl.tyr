@@ -5,8 +5,15 @@ public type GLboolean := bool
 
 public type GLbitfield := Unsigned[32]
 public type GLenum := Unsigned[32]
+public type GLshort := Integer[16]
+public type GLint := Integer[32]
 public type GLuint := Unsigned[32]
+public type GLsizei := Integer[32]
 
+public type GLfloat := float
+public type GLclampf := float
+public type GLdouble := double
+public type GLclampd := double
 
 
 /**
@@ -22,23 +29,48 @@ public type gl {
   public type val POINT_BIT = 0x00000002u
   public type val LINE_BIT = 0x00000004u
   public type val POLYGON_BIT = 0x00000008u
-  public type val POLYGON_STIPPLE_BIT =	0x00000010u
-  public type val PIXEL_MODE_BIT =	0x00000020u
+  public type val POLYGON_STIPPLE_BIT = 0x00000010u
+  public type val PIXEL_MODE_BIT = 0x00000020u
   public type val LIGHTING_BIT = 0x00000040u
   public type val FOG_BIT = 0x00000080u
-  public type val DEPTH_BUFFER_BIT =	0x00000100u
-  public type val ACCUM_BUFFER_BIT =	0x00000200u
-  public type val STENCIL_BUFFER_BIT =	0x00000400u
+  public type val DEPTH_BUFFER_BIT = 0x00000100u
+  public type val ACCUM_BUFFER_BIT = 0x00000200u
+  public type val STENCIL_BUFFER_BIT = 0x00000400u
   public type val VIEWPORT_BIT = 0x00000800u
-  public type val TRANSFORM_BIT =	0x00001000u
+  public type val TRANSFORM_BIT = 0x00001000u
   public type val ENABLE_BIT = 0x00002000u
-  public type val COLOR_BUFFER_BIT =	0x00004000u
+  public type val COLOR_BUFFER_BIT = 0x00004000u
   public type val HINT_BIT = 0x00008000u
   public type val EVAL_BIT = 0x00010000u
   public type val LIST_BIT = 0x00020000u
   public type val TEXTURE_BIT = 0x00040000u
   public type val SCISSOR_BIT = 0x00080000u
-  public type val ALL_ATTRIB_BITS =	0xFFFFFFFFu
+  public type val ALL_ATTRIB_BITS = 0xFFFFFFFFu
+
+  /* Data types */
+  public type val BYTE = 0x1400u
+  public type val UNSIGNED_BYTE = 0x1401u
+  public type val SHORT = 0x1402u
+  public type val UNSIGNED_SHORT = 0x1403u
+  public type val INT = 0x1404u
+  public type val UNSIGNED_INT = 0x1405u
+  public type val FLOAT = 0x1406u
+  public type val `2_BYTES` = 0x1407u
+  public type val `3_BYTES` = 0x1408u
+  public type val `4_BYTES` = 0x1409u
+  public type val DOUBLE = 0x140Au
+
+  /* Fog */
+  public type val FOG = 0x0B60u
+  public type val FOG_MODE = 0x0B65u
+  public type val FOG_DENSITY = 0x0B62u
+  public type val FOG_COLOR = 0x0B66u
+  public type val FOG_INDEX = 0x0B61u
+  public type val FOG_START = 0x0B63u
+  public type val FOG_END = 0x0B64u
+  public type val LINEAR = 0x2601u
+  public type val EXP = 0x0800u
+  public type val EXP2 = 0x0801u
 
   /* Primitives */
   public type val POINTS = 0x0000u
@@ -46,13 +78,238 @@ public type gl {
   public type val LINE_LOOP = 0x0002u
   public type val LINE_STRIP = 0x0003u
   public type val TRIANGLES = 0x0004u
-  public type val TRIANGLE_STRIP =	0x0005u
+  public type val TRIANGLE_STRIP = 0x0005u
   public type val TRIANGLE_FAN = 0x0006u
   public type val QUADS = 0x0007u
   public type val QUAD_STRIP = 0x0008u
   public type val POLYGON = 0x0009u
 
+  /* Buffers, Pixel Drawing/Reading */
+  public type val NONE = 0x0000u
+  public type val LEFT = 0x0406u
+  public type val RIGHT = 0x0407u
+  /*GL_FRONT = 0x0404 */
+  /*GL_BACK = 0x0405 */
+  /*GL_FRONT_AND_BACK = 0x0408 */
+  public type val FRONT_LEFT = 0x0400u
+  public type val FRONT_RIGHT = 0x0401u
+  public type val BACK_LEFT = 0x0402u
+  public type val BACK_RIGHT = 0x0403u
+  public type val AUX0 = 0x0409u
+  public type val AUX1 = 0x040Au
+  public type val AUX2 = 0x040Bu
+  public type val AUX3 = 0x040Cu
+  public type val COLOR_INDEX = 0x1900u
+  public type val RED = 0x1903u
+  public type val GREEN = 0x1904u
+  public type val BLUE = 0x1905u
+  public type val ALPHA = 0x1906u
+  public type val LUMINANCE = 0x1909u
+  public type val LUMINANCE_ALPHA = 0x190Au
+  public type val ALPHA_BITS = 0x0D55u
+  public type val RED_BITS = 0x0D52u
+  public type val GREEN_BITS = 0x0D53u
+  public type val BLUE_BITS = 0x0D54u
+  public type val INDEX_BITS = 0x0D51u
+  public type val SUBPIXEL_BITS = 0x0D50u
+  public type val AUX_BUFFERS = 0x0C00u
+  public type val READ_BUFFER = 0x0C02u
+  public type val DRAW_BUFFER = 0x0C01u
+  public type val DOUBLEBUFFER = 0x0C32u
+  public type val STEREO = 0x0C33u
+  public type val BITMAP = 0x1A00u
+  public type val COLOR = 0x1800u
+  public type val DEPTH = 0x1801u
+  public type val STENCIL = 0x1802u
+  public type val DITHER = 0x0BD0u
+  public type val RGB = 0x1907u
+  public type val RGBA = 0x1908u
 
+  /* Texture mapping */
+  public type val TEXTURE_ENV = 0x2300u
+  public type val TEXTURE_ENV_MODE = 0x2200u
+  public type val TEXTURE_1D = 0x0DE0u
+  public type val TEXTURE_2D = 0x0DE1u
+  public type val TEXTURE_WRAP_S = 0x2802u
+  public type val TEXTURE_WRAP_T = 0x2803u
+  public type val TEXTURE_MAG_FILTER = 0x2800u
+  public type val TEXTURE_MIN_FILTER = 0x2801u
+  public type val TEXTURE_ENV_COLOR = 0x2201u
+  public type val TEXTURE_GEN_S = 0x0C60u
+  public type val TEXTURE_GEN_T = 0x0C61u
+  public type val TEXTURE_GEN_R = 0x0C62u
+  public type val TEXTURE_GEN_Q = 0x0C63u
+  public type val TEXTURE_GEN_MODE = 0x2500u
+  public type val TEXTURE_BORDER_COLOR = 0x1004u
+  public type val TEXTURE_WIDTH = 0x1000u
+  public type val TEXTURE_HEIGHT = 0x1001u
+  public type val TEXTURE_BORDER = 0x1005u
+  public type val TEXTURE_COMPONENTS = 0x1003u
+  public type val TEXTURE_RED_SIZE = 0x805Cu
+  public type val TEXTURE_GREEN_SIZE = 0x805Du
+  public type val TEXTURE_BLUE_SIZE = 0x805Eu
+  public type val TEXTURE_ALPHA_SIZE = 0x805Fu
+  public type val TEXTURE_LUMINANCE_SIZE = 0x8060u
+  public type val TEXTURE_INTENSITY_SIZE = 0x8061u
+  public type val NEAREST_MIPMAP_NEAREST = 0x2700u
+  public type val NEAREST_MIPMAP_LINEAR = 0x2702u
+  public type val LINEAR_MIPMAP_NEAREST = 0x2701u
+  public type val LINEAR_MIPMAP_LINEAR = 0x2703u
+  public type val OBJECT_LINEAR = 0x2401u
+  public type val OBJECT_PLANE = 0x2501u
+  public type val EYE_LINEAR = 0x2400u
+  public type val EYE_PLANE = 0x2502u
+  public type val SPHERE_MAP = 0x2402u
+  public type val DECAL = 0x2101u
+  public type val MODULATE = 0x2100u
+  public type val NEAREST = 0x2600u
+  public type val REPEAT = 0x2901u
+  public type val CLAMP = 0x2900u
+  public type val S = 0x2000u
+  public type val T = 0x2001u
+  public type val R = 0x2002u
+  public type val Q = 0x2003u
+
+  /* OpenGL 1.2 */
+  public type val RESCALE_NORMAL = 0x803Au
+  public type val CLAMP_TO_EDGE = 0x812Fu
+  public type val MAX_ELEMENTS_VERTICES = 0x80E8u
+  public type val MAX_ELEMENTS_INDICES = 0x80E9u
+  public type val BGR = 0x80E0u
+  public type val BGRA = 0x80E1u
+  public type val UNSIGNED_BYTE_3_3_2 = 0x8032u
+  public type val UNSIGNED_BYTE_2_3_3_REV = 0x8362u
+  public type val UNSIGNED_SHORT_5_6_5 = 0x8363u
+  public type val UNSIGNED_SHORT_5_6_5_REV = 0x8364u
+  public type val UNSIGNED_SHORT_4_4_4_4 = 0x8033u
+  public type val UNSIGNED_SHORT_4_4_4_4_REV = 0x8365u
+  public type val UNSIGNED_SHORT_5_5_5_1 = 0x8034u
+  public type val UNSIGNED_SHORT_1_5_5_5_REV = 0x8366u
+  public type val UNSIGNED_INT_8_8_8_8 = 0x8035u
+  public type val UNSIGNED_INT_8_8_8_8_REV = 0x8367u
+  public type val UNSIGNED_INT_10_10_10_2 = 0x8036u
+  public type val UNSIGNED_INT_2_10_10_10_REV = 0x8368u
+  public type val LIGHT_MODEL_COLOR_CONTROL = 0x81F8u
+  public type val SINGLE_COLOR = 0x81F9u
+  public type val SEPARATE_SPECULAR_COLOR = 0x81FAu
+  public type val TEXTURE_MIN_LOD = 0x813Au
+  public type val TEXTURE_MAX_LOD = 0x813Bu
+  public type val TEXTURE_BASE_LEVEL = 0x813Cu
+  public type val TEXTURE_MAX_LEVEL = 0x813Du
+  public type val SMOOTH_POINT_SIZE_RANGE = 0x0B12u
+  public type val SMOOTH_POINT_SIZE_GRANULARITY = 0x0B13u
+  public type val SMOOTH_LINE_WIDTH_RANGE = 0x0B22u
+  public type val SMOOTH_LINE_WIDTH_GRANULARITY = 0x0B23u
+  public type val ALIASED_POINT_SIZE_RANGE = 0x846Du
+  public type val ALIASED_LINE_WIDTH_RANGE = 0x846Eu
+  public type val PACK_SKIP_IMAGES = 0x806Bu
+  public type val PACK_IMAGE_HEIGHT = 0x806Cu
+  public type val UNPACK_SKIP_IMAGES = 0x806Du
+  public type val UNPACK_IMAGE_HEIGHT = 0x806Eu
+  public type val TEXTURE_3D = 0x806Fu
+  public type val PROXY_TEXTURE_3D = 0x8070u
+  public type val TEXTURE_DEPTH = 0x8071u
+  public type val TEXTURE_WRAP_R = 0x8072u
+  public type val MAX_3D_TEXTURE_SIZE = 0x8073u
+  public type val TEXTURE_BINDING_3D = 0x806Au
+
+  /* OpenGL 1.3 */
+  public type val TEXTURE0 = 0x84C0u
+  public type val TEXTURE1 = 0x84C1u
+  public type val TEXTURE2 = 0x84C2u
+  public type val TEXTURE3 = 0x84C3u
+  public type val TEXTURE4 = 0x84C4u
+  public type val TEXTURE5 = 0x84C5u
+  public type val TEXTURE6 = 0x84C6u
+  public type val TEXTURE7 = 0x84C7u
+  public type val TEXTURE8 = 0x84C8u
+  public type val TEXTURE9 = 0x84C9u
+  public type val TEXTURE10 = 0x84CAu
+  public type val TEXTURE11 = 0x84CBu
+  public type val TEXTURE12 = 0x84CCu
+  public type val TEXTURE13 = 0x84CDu
+  public type val TEXTURE14 = 0x84CEu
+  public type val TEXTURE15 = 0x84CFu
+  public type val TEXTURE16 = 0x84D0u
+  public type val TEXTURE17 = 0x84D1u
+  public type val TEXTURE18 = 0x84D2u
+  public type val TEXTURE19 = 0x84D3u
+  public type val TEXTURE20 = 0x84D4u
+  public type val TEXTURE21 = 0x84D5u
+  public type val TEXTURE22 = 0x84D6u
+  public type val TEXTURE23 = 0x84D7u
+  public type val TEXTURE24 = 0x84D8u
+  public type val TEXTURE25 = 0x84D9u
+  public type val TEXTURE26 = 0x84DAu
+  public type val TEXTURE27 = 0x84DBu
+  public type val TEXTURE28 = 0x84DCu
+  public type val TEXTURE29 = 0x84DDu
+  public type val TEXTURE30 = 0x84DEu
+  public type val TEXTURE31 = 0x84DFu
+  public type val ACTIVE_TEXTURE = 0x84E0u
+  public type val MULTISAMPLE = 0x809Du
+  public type val SAMPLE_ALPHA_TO_COVERAGE = 0x809Eu
+  public type val SAMPLE_ALPHA_TO_ONE = 0x809Fu
+  public type val SAMPLE_COVERAGE = 0x80A0u
+  public type val SAMPLE_BUFFERS = 0x80A8u
+  public type val SAMPLES = 0x80A9u
+  public type val SAMPLE_COVERAGE_VALUE = 0x80AAu
+  public type val SAMPLE_COVERAGE_INVERT = 0x80ABu
+  public type val TEXTURE_CUBE_MAP = 0x8513u
+  public type val TEXTURE_BINDING_CUBE_MAP = 0x8514u
+  public type val TEXTURE_CUBE_MAP_POSITIVE_X = 0x8515u
+  public type val TEXTURE_CUBE_MAP_NEGATIVE_X = 0x8516u
+  public type val TEXTURE_CUBE_MAP_POSITIVE_Y = 0x8517u
+  public type val TEXTURE_CUBE_MAP_NEGATIVE_Y = 0x8518u
+  public type val TEXTURE_CUBE_MAP_POSITIVE_Z = 0x8519u
+  public type val TEXTURE_CUBE_MAP_NEGATIVE_Z = 0x851Au
+  public type val PROXY_TEXTURE_CUBE_MAP = 0x851Bu
+  public type val MAX_CUBE_MAP_TEXTURE_SIZE = 0x851Cu
+  public type val COMPRESSED_RGB = 0x84EDu
+  public type val COMPRESSED_RGBA = 0x84EEu
+  public type val TEXTURE_COMPRESSION_HINT = 0x84EFu
+  public type val TEXTURE_COMPRESSED_IMAGE_SIZE = 0x86A0u
+  public type val TEXTURE_COMPRESSED = 0x86A1u
+  public type val NUM_COMPRESSED_TEXTURE_FORMATS = 0x86A2u
+  public type val COMPRESSED_TEXTURE_FORMATS = 0x86A3u
+  public type val CLAMP_TO_BORDER = 0x812Du
+  public type val CLIENT_ACTIVE_TEXTURE = 0x84E1u
+  public type val MAX_TEXTURE_UNITS = 0x84E2u
+  public type val TRANSPOSE_MODELVIEW_MATRIX = 0x84E3u
+  public type val TRANSPOSE_PROJECTION_MATRIX = 0x84E4u
+  public type val TRANSPOSE_TEXTURE_MATRIX = 0x84E5u
+  public type val TRANSPOSE_COLOR_MATRIX = 0x84E6u
+  public type val MULTISAMPLE_BIT = 0x20000000u
+  public type val NORMAL_MAP = 0x8511u
+  public type val REFLECTION_MAP = 0x8512u
+  public type val COMPRESSED_ALPHA = 0x84E9u
+  public type val COMPRESSED_LUMINANCE = 0x84EAu
+  public type val COMPRESSED_LUMINANCE_ALPHA = 0x84EBu
+  public type val COMPRESSED_INTENSITY = 0x84ECu
+  public type val COMBINE = 0x8570u
+  public type val COMBINE_RGB = 0x8571u
+  public type val COMBINE_ALPHA = 0x8572u
+  public type val SOURCE0_RGB = 0x8580u
+  public type val SOURCE1_RGB = 0x8581u
+  public type val SOURCE2_RGB = 0x8582u
+  public type val SOURCE0_ALPHA = 0x8588u
+  public type val SOURCE1_ALPHA = 0x8589u
+  public type val SOURCE2_ALPHA = 0x858Au
+  public type val OPERAND0_RGB = 0x8590u
+  public type val OPERAND1_RGB = 0x8591u
+  public type val OPERAND2_RGB = 0x8592u
+  public type val OPERAND0_ALPHA = 0x8598u
+  public type val OPERAND1_ALPHA = 0x8599u
+  public type val OPERAND2_ALPHA = 0x859Au
+  public type val RGB_SCALE = 0x8573u
+  public type val ADD_SIGNED = 0x8574u
+  public type val INTERPOLATE = 0x8575u
+  public type val SUBTRACT = 0x84E7u
+  public type val CONSTANT = 0x8576u
+  public type val PRIMARY_COLOR = 0x8577u
+  public type val PREVIOUS = 0x8578u
+  public type val DOT3_RGB = 0x86AEu
+  public type val DOT3_RGBA = 0x86AFu
 
   // draw API
   public type def begin(mode : GLenum) : void extern gl.glBegin
@@ -177,12 +434,18 @@ GLAPI void GLAPIENTRY glTexCoord1d( GLdouble s );
 GLAPI void GLAPIENTRY glTexCoord1f( GLfloat s );
 GLAPI void GLAPIENTRY glTexCoord1i( GLint s );
 GLAPI void GLAPIENTRY glTexCoord1s( GLshort s );
+*/
 
-GLAPI void GLAPIENTRY glTexCoord2d( GLdouble s, GLdouble t );
-GLAPI void GLAPIENTRY glTexCoord2f( GLfloat s, GLfloat t );
-GLAPI void GLAPIENTRY glTexCoord2i( GLint s, GLint t );
-GLAPI void GLAPIENTRY glTexCoord2s( GLshort s, GLshort t );
+  public type def texCoord(s : GLdouble, t : GLdouble) : void
+    extern gl.glTexCoord2d
+  public type def texCoord(s : GLfloat, t : GLfloat) : void
+    extern gl.glTexCoord2f
+  public type def texCoord(s : GLint, t : GLint) : void
+    extern gl.glTexCoord2i
+  public type def texCoord(s : GLshort, t : GLshort) : void
+    extern gl.glTexCoord2s
 
+/*
 GLAPI void GLAPIENTRY glTexCoord3d( GLdouble s, GLdouble t, GLdouble r );
 GLAPI void GLAPIENTRY glTexCoord3f( GLfloat s, GLfloat t, GLfloat r );
 GLAPI void GLAPIENTRY glTexCoord3i( GLint s, GLint t, GLint r );
@@ -213,6 +476,71 @@ GLAPI void GLAPIENTRY glTexCoord4fv( const GLfloat *v );
 GLAPI void GLAPIENTRY glTexCoord4iv( const GLint *v );
 GLAPI void GLAPIENTRY glTexCoord4sv( const GLshort *v );
 */
+
+
+  /* Texture mapping */
+// GLAPI void GLAPIENTRY glTexGend( GLenum coord, GLenum pname, GLdouble param );
+// GLAPI void GLAPIENTRY glTexGenf( GLenum coord, GLenum pname, GLfloat param );
+// GLAPI void GLAPIENTRY glTexGeni( GLenum coord, GLenum pname, GLint param );
+
+// GLAPI void GLAPIENTRY glTexGendv( GLenum coord, GLenum pname, const GLdouble *params );
+// GLAPI void GLAPIENTRY glTexGenfv( GLenum coord, GLenum pname, const GLfloat *params );
+// GLAPI void GLAPIENTRY glTexGeniv( GLenum coord, GLenum pname, const GLint *params );
+
+// GLAPI void GLAPIENTRY glGetTexGendv( GLenum coord, GLenum pname, GLdouble *params );
+// GLAPI void GLAPIENTRY glGetTexGenfv( GLenum coord, GLenum pname, GLfloat *params );
+// GLAPI void GLAPIENTRY glGetTexGeniv( GLenum coord, GLenum pname, GLint *params );
+
+
+// GLAPI void GLAPIENTRY glTexEnvf( GLenum target, GLenum pname, GLfloat param );
+// GLAPI void GLAPIENTRY glTexEnvi( GLenum target, GLenum pname, GLint param );
+
+// GLAPI void GLAPIENTRY glTexEnvfv( GLenum target, GLenum pname, const GLfloat *params );
+// GLAPI void GLAPIENTRY glTexEnviv( GLenum target, GLenum pname, const GLint *params );
+
+// GLAPI void GLAPIENTRY glGetTexEnvfv( GLenum target, GLenum pname, GLfloat *params );
+// GLAPI void GLAPIENTRY glGetTexEnviv( GLenum target, GLenum pname, GLint *params );
+
+
+  public type def texParameter(target : GLenum, pname : GLenum, param : GLfloat)
+    : void extern gl.glTexParameterf;
+  public type def texParameter(target : GLenum, pname : GLenum, param : GLenum)
+    : void extern gl.glTexParameteri;
+
+// GLAPI void GLAPIENTRY glTexParameterfv( GLenum target, GLenum pname,
+//                                           const GLfloat *params );
+// GLAPI void GLAPIENTRY glTexParameteriv( GLenum target, GLenum pname,
+//                                           const GLint *params );
+
+// GLAPI void GLAPIENTRY glGetTexParameterfv( GLenum target,
+//                                            GLenum pname, GLfloat *params);
+// GLAPI void GLAPIENTRY glGetTexParameteriv( GLenum target,
+//                                            GLenum pname, GLint *params );
+
+// GLAPI void GLAPIENTRY glGetTexLevelParameterfv( GLenum target, GLint level,
+//                                                 GLenum pname, GLfloat *params );
+// GLAPI void GLAPIENTRY glGetTexLevelParameteriv( GLenum target, GLint level,
+//                                                 GLenum pname, GLint *params );
+
+  public type def texImage1D(
+    target : GLenum, level : GLint,
+    internalFormat : GLenum,
+    width : GLsizei,
+    border : GLint, format : GLenum, typ : GLenum,
+    pixels : container.ArrayView[byte]
+  ) : void extern gl.glTexImage1D
+
+  public type def texImage2D(
+    target : GLenum, level : GLint,
+    internalFormat : GLenum,
+    width : GLsizei, height : GLsizei,
+    border : GLint, format : GLenum, typ : GLenum,
+    pixels : container.ArrayView[byte]
+  ) : void extern gl.glTexImage2D
+
+// GLAPI void GLAPIENTRY glGetTexImage( GLenum target, GLint level,
+//                                      GLenum format, GLenum type,
+//                                      GLvoid *pixels );
 
   // misc API
   public type def clearIndex(c : float) : void extern gl.glClearIndex
@@ -308,4 +636,28 @@ GLAPI GLint GLAPIENTRY glRenderMode( GLenum mode );
 
   public type def hint(target : GLenum, mode : GLenum) : void extern gl.glHint
 
+
+  /* 1.1 functions */
+
+  // TODO there should be an overolad taking an array as second argument
+  public type def genTextures(
+    n : GLsizei, textures : Ref[GLuint]
+  ) : void extern gl.glGenTextures;
+
+  public type def deleteTextures(
+    n : GLsizei, textures : CRef[GLuint]
+  ) : void extern gl.glDeleteTextures
+
+  public type def bindTexture(target : GLenum, texture : GLuint) : void
+    extern gl.glBindTexture
+
+
+  /* 1.3 functions */
+
+  public type def activeTexture(target : GLenum) : void
+    extern gl.glActiveTexture
+
+  /* 3.0 functions */
+  public type def generateMipmap(target : GLenum) : void
+    extern gl.glGenerateMipmap
 }
