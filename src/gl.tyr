@@ -1,4 +1,6 @@
 with string := tyr.io.CString
+// we use this type represent all arrays that have type T* in C
+with ArrayView := tyr.lang.container.ArrayView
 
 // OpenGL typedefs
 public type GLboolean := bool
@@ -657,7 +659,20 @@ GLAPI GLint GLAPIENTRY glRenderMode( GLenum mode );
   public type def activeTexture(target : GLenum) : void
     extern gl.glActiveTexture
 
+  /* 2.0 functions */
+
+  public type def getUniformLocation(program : GLuint, name : string) : GLint
+    extern gl.glGetUniformLocation
+
   /* 3.0 functions */
   public type def generateMipmap(target : GLenum) : void
     extern gl.glGenerateMipmap
+
+  public
+  type def bindVertexArray(array : GLuint) : void
+    extern gl.glBindVertexArray
+
+  public
+  type def genVertexArrays(n : GLsizei, arrays : ArrayView[GLuint]) : void
+    extern gl.glGenVertexArrays
 }
